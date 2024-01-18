@@ -46,6 +46,8 @@
 
 ## 1. Definitions
 
+#### General Definitions:
+
 ### What is a Virtual Machine?
 A virtual machine, VM for short, is an emulation of a computer system on a physical computer in orde to emulate the functionality of another seperate computer. This allows us to run multiple operating systems on a single physical machine. 
 
@@ -78,3 +80,7 @@ Any changes made to a Docker Image will not affect the original image, but will 
 ### What is a Dockerfile?
 
 Compared to Makefiles, Dockerfiles are also text-files that contain a set of commands and instructions for building a specific Docker Image. These instructions define the steps that are needed to set up the environment, install dependencies, configure the image, run the application, etc.
+
+### What is Docker Compose?
+
+
