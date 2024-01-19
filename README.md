@@ -2,26 +2,27 @@
 
 ## Table of Contents
 
-1. Definitions
-	- What is a Virtual Machine?
-	- Problematic
-	- Solution: What is a Docker?
-	- What is a Container?
-	- What is a Docker Image?
-	- What is a Dockerfile?
-	- What is Docker Compose?
-	- What is Docker Hub?
-	- What is Docker Swarm?
-	- What are Docker Volumes?
-	- What is Docker Machine?
-	- What is Docker Engine?
-	- What is Docker Client?
-	- What is Docker Daemon?
+1. [Definitions](#1-definitions)
+	- [General Definitions](#general-definitions)
+	- [What is a Virtual Machine?](#what-is-a-virtual-machine)
+	- [Problematic](#problematic)
+	- [Solution: What is a Docker?](#solution-what-is-a-docker)
+	- [What is a Container?](#what-is-a-container)
+	- [What is a Docker Image?](#what-is-a-docker-image)
+	- [What is a Dockerfile?](#what-is-a-dockerfile)
+	- [What is Docker Compose?](#what-is-docker-compose)
+	- [What is Docker Hub?](#what-is-docker-hub)
+	- [What is Docker Swarm?](#what-is-docker-swarm)
+	- [What are Docker Volumes?](#what-are-docker-volumes)
+	- [What is Docker Machine?](#what-is-docker-machine)
+	- [What is Docker Engine?](#what-is-docker-engine)
+	- [What is Docker Client?](#what-is-docker-client)
+	- [What is Docker Daemon?](#what-is-docker-daemon)
 
-2. Docker Installation
-	- Docker Installation on Ubuntu
-	- Docker Installation on Windows
-	- Docker Installation on Mac
+2. [Docker Installation](#2-docker-installation)
+	- [Docker Installation on Mac](#docker-installation-on-mac)
+	- [Docker Installation on Windows](#docker-installation-on-windows)
+	- [Docker Installation on Ubuntu](#docker-installation-on-ubuntu)
 
 3. Docker Commands
 	- Docker Commands for Images
