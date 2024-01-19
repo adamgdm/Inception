@@ -24,25 +24,12 @@
 	- [Docker Installation on Windows](#docker-installation-on-windows)
 	- [Docker Installation on Ubuntu](#docker-installation-on-ubuntu)
 
-3. Docker Commands
-	- Docker Commands for Images
-	- Docker Commands for Containers
-	- Docker Commands for Dockerfile
-	- Docker Commands for Docker Compose
-	- Docker Commands for Docker Hub
-	- Docker Commands for Docker Swarm
-	- Docker Commands for Docker Machine
-	- Docker Commands for Docker Engine
-	- Docker Commands for Docker Client
-	- Docker Commands for Docker Daemon
-	- Docker Commands for Docker Registry
-
-4. Dockerfile
+3. Dockerfile
 	- Dockerfile Instructions
 	- Dockerfile Best Practices
 	- Dockerfile Example
 
-5. Docker Compose
+4. Docker Compose
 	- What is Docker Compose?
 
 ## 1. Definitions
@@ -181,7 +168,109 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 $ sudo docker run hello-world
 ```
 
-## 3. Docker Commands
+## 3. Dockerfile
+
+### Dockerfile Instructions
+
+As mentioned earlier, Dockerfiles are text-files that contain a set of commands and instructions for building a specific Docker Image. These instructions define the steps that are needed to set up the environment, install dependencies, configure the image, run the application, etc.
+
+Basically, They are the recipe for building a Docker Image.
+
+To write a Dockerfile, we need to use a set of instructions. These instructions are used to build a Docker Image. There are two types of instructions: general instructions and specific instructions.
+
+General instructions are instructions that are used to set up the environment, install dependencies, etc. These instructions are not specific to Docker, and can be used in other contexts as well.
+
+Examples of general instructions are:
+
+- FROM
+- RUN
+- COPY
+- ADD
+- ENV
+- WORKDIR
+
+Specific instructions are instructions that are specific to Docker. These instructions are used to build a Docker Image.
+
+Examples of specific instructions are:
+
+- EXPOSE
+- CMD
+- ENTRYPOINT
+- VOLUME
+
+###### A basic Dockerfile should contain the following instructions:
+
+##### Specify the base image
+```
+FROM *Specifies the base image*
+```
+
+##### Set the working directory
+```
+WORKDIR *Sets the working directory*
+```
+
+##### Copy the files
+```
+COPY *Copies files from the host machine to the container*
+```
+
+##### Install dependencies
+```
+RUN *Installs dependencies*
+```
+
+##### Expose the port
+```
+EXPOSE *Exposes the port*
+```
+
+##### Set the entrypoint /*Entrypoint is the command that is executed when the container is started*/
+```
+ENTRYPOINT *Sets the entrypoint*
+```
+
+##### Set the command /*Command is the command that is executed when the container is started*/
+```
+CMD *Sets the command*
+```
+
+##### Build Your Image
+```
+docker build -t <image-name> <path-to-dockerfile>
+```
+
+##### Run Your Image
+```
+docker run <image-name>
+```
+
+To highlight the difference between CMD and ENTRYPOINT, It should be noted that CMD sets default command and/or parameters, which can be overridden when running the container while ENTRYPOINT sets the main command and parameters that cannot be easily overridden when running the container.
+
+Our File should look something like this:
+
+```
+# We'll take the official Node.js image as our base image
+FROM node:14.17.0-alpine3.13 
+WORKDIR /app
+
+COPY package.json .
+RUN npm install
+EXPOSE 8000
+
+CMD ["npm", "start"]
+```
+
+in bash:
+```
+$ docker build -t my-app .
+$ docker run -p 8000:8000 my-app
+```
+
+
+### Dockerfile Best Practices
+
+
 
 
 
