@@ -273,35 +273,35 @@ A good Dockerfile should be written in a way that is easy to read and understand
 
 Here are some best practices for writing a Dockerfile:
 
-- Use the official base image for your application
+##### Use the official base image for your application
 
 Begin with official base images, like FROM node:14.17.0-alpine3.13, and be specific about the version.
 
-- Use the WORKDIR instruction early on to set the working directory 
+##### Use the WORKDIR instruction early on to set the working directory 
 
 Use WORKDIR to set a clear working directory for subsequent commands.
 
-- Copy Smartly
+##### Copy Smartly
 
 Copy only what your app needs, using specific patterns like COPY package*.json ./.
 
-- Combine RUN commands to reduce layers
+##### Combine RUN commands to reduce layers
 
 Use && to combine multiple commands in a single RUN instruction for efficiency.
 
-- Remove unused dependencies to minimize image size
+##### Remove unused dependencies to minimize image size
 
 Pretty self-explanatory.
 
-- Use .dockerignore
+##### Use .dockerignore
 
 Create a .dockerignore file to exclude unnecessary files from being copied.
 
-- Include health checks for better container reliability.
+##### Include health checks for better container reliability.
 
 Include health checks (HEALTHCHECK) to ensure your app is running properly.
 
-- Consider using multi-stage builds for smaller final images.
+##### Consider using multi-stage builds for smaller final images.
 
 Use multi-stage builds for smaller final images, especially if you have a build stage and a runtime stage.
 
