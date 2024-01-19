@@ -115,6 +115,72 @@ Docker Client, CLI for short, is a command-line tool that allows us to interact 
 
 Docker Daemon, dockerd for short, is a persistent background process that manages Docker containers on a host machine. It is responsible for listening to Docker API requests and managing Docker objects such as images, containers, networks, and volumes. It is actively managing and coordinating the activities of Docker containers.
 
+## 2. Docker Installation
+
+### Docker Installation on Mac
+
+1. Download Docker Desktop for Mac from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac/).
+
+2. Double-click Docker.dmg to open the installer, then drag Moby the whale to the Applications folder.
+
+3. Follow the instructions on the installation wizard to authorize the installer and proceed with the install.
+
+4. When the installation is successful, click the whale icon in the menu bar and select About Docker Desktop to verify that you have the latest version.
+
+### Docker Installation on Windows
+
+1. Download Docker Desktop for Windows from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/).
+
+2. Double-click Docker Desktop Installer.exe to run the installer.
+
+3. Follow the instructions on the installation wizard to authorize the installer and proceed with the install.
+
+4. When the installation is successful, click the whale icon in the Notifications area and select About Docker Desktop to verify that you have the latest version.
+
+### Docker Installation on Ubuntu
+
+1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:
+
+```
+$ sudo apt-get update
+
+$ sudo apt-get install \
+	apt-transport-https \
+	ca-certificates \
+	curl \
+	gnupg \
+	lsb-release
+```
+
+2. Add Docker’s official GPG key:
+
+```
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+
+3. Use the following command to set up the stable repository:
+
+```
+$ echo \
+	"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+	$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+4. Update the apt package index, and install the latest version of Docker Engine and containerd:
+
+```
+$ sudo apt-get update
+
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+5. Verify that Docker Engine is installed correctly by running the hello-world image:
+
+```
+$ sudo docker run hello-world
+```
+
+## 3. Docker Commands
 
 
 
