@@ -29,8 +29,10 @@
 	- [Dockerfile Best Practices](#dockerfile-best-practices)
 	- [Dockerfile Example](#dockerfile-example)
 
-4. Docker Compose
-	- What is Docker Compose?
+4. [Docker Compose](#4-docker-compose)
+	- [What is Docker Compose?](#what-is-docker-compose-1)
+	- [How to use Docker Compose?](#how-to-use-docker-compose)
+
 
 ## 1. Definitions
 
@@ -340,6 +342,39 @@ HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:3000 || exi
 CMD ["npm", "start"]
 ```
 
+## 4. Docker Compose
+
+### What is Docker Compose?
+
+Docker Compose is a tool that allows for defining and running multi-container (multiple containers that work together) Docker applications. This last allows us to use a YAML file (file written with a language called YAML) to configure our application's services. Then, with a single command, we can create and start all the services from our configuration. This tool makes it super easy to run multiple Docker containers at once. We can also use Docker Compose to scale our application's services, run a one-off command on a service, and more.
+
+### How to use Docker Compose?
+
+To use Docker Compose, we need to create a YAML file called docker-compose.yml. A YAML file looks something like this:
+
+```
+version: '3'  # Specify the version of Docker Compose syntax
+
+services:
+  web:
+    image: nginx:latest  # Use the latest version of the Nginx image from Docker Hub
+    ports:
+      - "80:80"  # Map port 80 on the host to port 80 on the container
+
+  db:
+    image: mysql:latest  # Use the latest version of the MySQL image
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword  # Set the root password for MySQL
+      MYSQL_DATABASE: mydatabase  # Create a database named 'mydatabase'
+      MYSQL_USER: user  # Create a MySQL user
+      MYSQL_PASSWORD: password  # Set the password for the MySQL user
+```
+
+Now, that is what a basic docker-compose.yml file looks like. Let's break it down.
+
+The first line specifies the version of Docker Compose syntax. This is important because Docker Compose supports multiple versions of the syntax, and we need to specify which version we are using.
+
+The second line specifies the services that we want to run. In our case, we have two services: web and db. Each service has a name, an image, a set of environment variables, and a set of ports that we want to map.
 
 
 
