@@ -418,9 +418,7 @@ docker-compose --help
 
 ## Project Guidelines
 
-This project consists in having you set up a small infrastructure composed of different
-services under specific rules. The whole project has to be done in a virtual machine. You
-have to use docker compose.
+This project consists in having you set up a small infrastructure composed of different services under specific rules. The whole project has to be done in a virtual machine. You have to use docker compose.
 
 Each Docker image must have the same name as its corresponding service.
 Each service has to run in a dedicated container.
@@ -531,3 +529,43 @@ For obvious security reasons, any credentials, API keys, env variables etc... mu
 
 First, We're going to create a directory structure as shown above. Then, we're going to create a Dockerfile for each service. We're also going to create a docker-compose.yml file that will define the services, volumes, and networks. All the files will be called in the Makefile, and they will be found in the srcs directory.
 
+### NGINX Service
+
+To start, I have created a 'web' directory. This directory will contain the Dockerfile for the NGINX service with the TLSv1.2 or TLSv1.3 protocol. I have pulled a stable Debian image, updated and upgraded the packages, installed NGINX along with OpenSSL, and deleted the /var/lib/apt/lists/ directory's content to reduce the image size.
+
+I have generated a self-signed certificate using the OpenSSL command, and I have copied the certificate to the /etc/ssl/certs/ directory, and the key to the /etc/ssl/private/ directory. The command to generate the certificate is as follows:
+
+```sh
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout selfsigned.key -out selfsigned.crt
+```
+
+I have also created a nginx.conf file that contains the configuration for the NGINX service. A basic file should look something like this:
+
+```conf
+events {
+
+}
+
+http {
+    include /etc/nginx/mime.types;
+
+    server {
+        listen 443 ssl http2;
+        server_name agoujdam.42.fr;
+
+        ssl_protocols TLSv1.3;
+        ssl_certificate /etc/ssl/certs/selfsigned.crt;
+        ssl_certificate_key /etc/ssl/private/selfsigned.key;   
+    }
+}
+```
+
+I made sure to expose port 443 in the Dockerfile and set a CMD to start the NGINX service, with the -g daemon off; directive to run NGINX in the foreground. This means that the NGINX service will run in the container, and the container will not exit immediately after starting the service.
+
+In our docker-compose.yml file, I have defined the NGINX service, mapped port 443 of the host machine to port 443 of the container, and set the restart policy to always, so that the container restarts in case of a crash. 
+
+We should not forget to forward the website's domain name "agoujdam.42.fr" to the local IP address. This can be done by adding the following line to the /etc/hosts file:
+
+```
+127.0.0.1	agoujdam.42.fr
+```
