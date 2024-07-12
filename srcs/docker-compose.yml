@@ -1,8 +1,79 @@
-version: '3'
+version: "3.8"
 
 services:
-  web:
-    build: ./web/
+  nginx:
+    build:
+      context: srcs/requirments/NGINX
+      dockerfile: Dockerfile
+    networks:
+      - inception
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - wordpress
     ports:
       - "443:443"
+    volumes:
+      - wordpress:/var/www/wordpress
+    env_file:
+      - .env
     restart: always
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: srcs/requirments/WORDPRESS
+      dockerfile: Dockerfile
+      args:
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_HOST: ${MYSQL_HOST}
+        MYSQL_PREFIX: ${MYSQL_PREFIX}
+        WORDPRESS_URL: ${WORDPRESS_URL}
+        WORDPRESS_TITLE: ${WORDPRESS_TITLE}
+        WORDPRESS_USER: ${WORDPRESS_USER}
+        WORDPRESS_PASSWORD: ${WORDPRESS_PASSWORD}
+        WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
+        USER_NAME: ${USER_NAME}
+        USER_EMAIL: ${USER_EMAIL}
+        USER_ROLE: ${USER_ROLE}
+        USER_PASSWORD: ${USER_PASSWORD}
+        WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+    volumes:
+      - wordpress:/var/www/wordpress
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build:
+      context: srcs/requirments/MARIADB
+      dockerfile: Dockerfile
+      args:
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    restart: always
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  wordpress:
+  mariadb:
