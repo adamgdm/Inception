@@ -1,21 +1,17 @@
-# Penultimate stable version of Debian
-FROM debian:buster
+FROM debian:bullseye
 
-# Update and Install NGINX and TLS 1.3 dependencies
-RUN apt-get update && \
-    apt-get install -y nginx openssl && \
-    rm -rf /var/lib/apt/lists/*
+# Update & Upgrade & Install Nginx & OpenSSL
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx openssl
 
-# Exposing the port
-EXPOSE 443
+# Create SSL Dir
+RUN mkdir -p /etc/nginx/ssl
 
-# Generate a Self Signed TLS 1.3 Certificate and place it in the etc/nginx/ssl directory
-RUN mkdir /etc/nginx/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt -subj "/C=MA/ST=Marrakesh-Asfi/L=BenGuerir/O=1337/CN=agoujdam.42.fr/UID=agoujdam"
+# Create SSL Certificate
+RUN openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/nginx-selfsigned.key -x509 -days 365 -out /etc/ssl/certs/nginx-selfsigned.crt -subj "/C=MA/ST=Marrakesh-Asfi/L=Benguerir/O=UM6P/OU=1337/CN=1337.ma"
 
-# Copy The NGINX Configuration from the host machine to the container
+# Copy the Configuration Of NGINX in the container to two directories: sites-available and sites-enabled
 COPY conf/agoujdam.conf /etc/nginx/sites-available/agoujdam.conf
-RUN ln -s /etc/nginx/sites-available/agoujdam.conf /etc/nginx/sites-enabled/agoujdam.conf
+RUN ln -s /etc/nginx/sites-available/agoujdam.conf /etc/nginx/sites-enabled/
 
-# Running the Service
-CMD ["nginx", "-g", "daemon off;"]
+# Run our Container
+CMD [ "nginx", "-g", "daemon off;" ]

@@ -1,29 +1,23 @@
-# Penultimate stable version of Debian
-FROM debian:buster
+FROM debian:bullseye
 
-# Update, Upgrade and Install MariaDB
-RUN apt update -y && apt upgrade -y & \
-    apt install -y mariadb-server 
+# Define Arguments
+ARG MARIADB_DB
+ARG MARIADB_USER
+ARG MARIADB_PASS
+ARG MARIADB_ROOT_PASS
 
-# Change the bind-address to 0.0.0.0
-RUN sed -i 's/bind-address/#bind-address/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
-    echo "bind-address = 0.0.0.0" >> /etc/mysql/mariadb.conf.d/50-server.cnf
+# Update & Upgrade & Install mariadb-server and create the directories
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y mariadb-server
+RUN mkdir -p /var/lib/mysql /var/run/mysqld && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld && chmod 777 /var/run/mysqld
 
-# Uncomment the log_error line
-RUN sed -i 's/#log_error/log_error/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
-    echo "log_error = /var/log/mysql/error.log" >> /etc/mysql/mariadb.conf.d/50-server.cnf
+# Copy Configuration file
+COPY conf/my.cnf /etc/mysql/mariadb.conf.d/my.cnf
+RUN chmod 775 /etc/mysql/mariadb.conf.d/my.cnf
 
-# Copy the database initialization script to the container
-COPY srcs/requirements/MARIADB/tools/init_db.sh /tmp/init_db.sh
+# Use the script of creation
+COPY CreatingDB.sh /CreatingDB.sh
+RUN chmod +x CreatingDB.sh && bash /CreatingDB.sh
 
-# Change the permissions of the script
-RUN chmod +x /tmp/init_db.sh
-
-# Start the MariaDB service
-RUN /tmp/init_db.sh
-
-# Exposing the port
 EXPOSE 3306
-   
-# Start the MariaDB service
-CMD ["mysqld_safe"]
+
+ENTRYPOINT [ "mysqld_safe" ]
