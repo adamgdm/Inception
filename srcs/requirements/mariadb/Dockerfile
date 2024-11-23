@@ -15,7 +15,7 @@ COPY conf/my.cnf /etc/mysql/mariadb.conf.d/my.cnf
 RUN chmod 775 /etc/mysql/mariadb.conf.d/my.cnf
 
 # Use the script of creation
-COPY CreatingDB.sh /CreatingDB.sh
+COPY tools/CreatingDB.sh /CreatingDB.sh
 RUN chmod +x CreatingDB.sh && bash /CreatingDB.sh
 
 EXPOSE 3306

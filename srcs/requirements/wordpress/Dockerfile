@@ -35,7 +35,7 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x /usr/local/bin/wp
 
 # Copy the setup script
-COPY setupWP.sh /setupWP.sh
+COPY tools/setupWP.sh /setupWP.sh
 RUN chmod +x /setupWP.sh
 
 EXPOSE 9000
