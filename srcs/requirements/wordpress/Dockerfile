@@ -1,17 +1,5 @@
 FROM debian:bullseye
 
-ARG MARIADB_DB
-ARG MARIADB_USER
-ARG MARIADB_PASS
-ARG DOMAIN_NAME
-ARG SITE_TITLE
-ARG ADMIN_USER
-ARG ADMIN_PASS
-ARG ADMIN_EMAIL
-ARG AUTHOR_USER
-ARG AUTHOR_EMAIL
-ARG AUTHOR_PASS
-
 # Update & Upgrade & Install necessary packages
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     wget \

@@ -39,19 +39,6 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-      args:
-        - MARIADB_DB
-        - MARIADB_USER
-        - MARIADB_PASS
-        - MARIADB_PASS_ROOT
-        - DOMAIN_NAME
-        - SITE_TITLE
-        - ADMIN_USER
-        - ADMIN_PASS
-        - ADMIN_EMAIL
-        - AUTHOR_USER
-        - AUTHOR_EMAIL
-        - AUTHOR_PASS
     image: wordpress
     depends_on:
       - mariadb
